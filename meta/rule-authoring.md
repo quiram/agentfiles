@@ -8,7 +8,7 @@ Rules for how LLM-facing rules are written and where they live. Ensures all rule
 *Level:* Operational — applies every time a rule is authored or updated
 *Audience:* Developers and AI agents creating or modifying rules
 
-> **Path note:** Examples in this file assume this repository is checked out as a submodule at `agents/rules/`. Adjust paths to match wherever it is actually checked out in your project.
+> **Path note:** Examples in this file assume this repository is checked out as a submodule at `agentfiles/`. Adjust paths to match wherever it is actually checked out in your project.
 
 ## Core Principles
 
@@ -37,7 +37,7 @@ Rules for how LLM-facing rules are written and where they live. Ensures all rule
 
 ```
 meta/readme-maintenance.md              ← correct location within this repo
-CLAUDE.md includes: @agents/rules/meta/readme-maintenance.md
+CLAUDE.md includes: @agentfiles/meta/readme-maintenance.md
 ```
 
 ### ❌ Don't Do This

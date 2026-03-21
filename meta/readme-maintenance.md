@@ -36,7 +36,7 @@ Rules for keeping `README.md` accurate and up to date as the codebase evolves. A
 
 ## Related Rules
 
-- agents/rules/npm-scripts.md — defines the canonical script names the README must reflect
+- node/npm-scripts.md — defines the canonical script names the README must reflect
 
 ---
 

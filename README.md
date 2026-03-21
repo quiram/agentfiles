@@ -23,7 +23,7 @@ These rules extend the broader rule set in [EqualExperts/llm-rules](https://gith
 
 ## Usage
 
-> **Path note:** The examples below assume this repo is added as a submodule at `agents/rules/`. If you check it out elsewhere, adjust all paths accordingly.
+> **Path note:** The examples below assume this repo is added as a submodule at `agentfiles/`. If you check it out elsewhere, adjust all paths accordingly.
 
 
 ### Claude Code
@@ -31,18 +31,18 @@ These rules extend the broader rule set in [EqualExperts/llm-rules](https://gith
 Add this repo as a git submodule and reference individual rules in `CLAUDE.md` using `@` imports. Claude Code will load each file into context automatically.
 
 ```bash
-git submodule add https://github.com/quiram/agentfiles.git agents/rules
+git submodule add https://github.com/quiram/agentfiles.git agentfiles
 ```
 
 ```markdown
 # CLAUDE.md
-@agents/rules/git/commit-messages.md
-@agents/rules/node/alias-imports.md
-@agents/rules/node/npm-scripts.md
-@agents/rules/node/npm-quality.md
-@agents/rules/node/test-organisation.md
-@agents/rules/meta/readme-maintenance.md
-@agents/rules/meta/rule-authoring.md
+@agentfiles/git/commit-messages.md
+@agentfiles/node/alias-imports.md
+@agentfiles/node/npm-scripts.md
+@agentfiles/node/npm-quality.md
+@agentfiles/node/test-organisation.md
+@agentfiles/meta/readme-maintenance.md
+@agentfiles/meta/rule-authoring.md
 ```
 
 Only reference the rules relevant to your project — omit `node/` rules for non-Node projects, for example.
@@ -58,12 +58,12 @@ Copilot reads `.github/copilot-instructions.md`. Reference the rule files direct
 
 Follow the rules defined in the following files:
 
-- agents/rules/git/commit-messages.md
-- agents/rules/node/alias-imports.md
-- agents/rules/node/npm-scripts.md
-- agents/rules/node/npm-quality.md
-- agents/rules/node/test-organisation.md
-- agents/rules/meta/readme-maintenance.md
+- agentfiles/git/commit-messages.md
+- agentfiles/node/alias-imports.md
+- agentfiles/node/npm-scripts.md
+- agentfiles/node/npm-quality.md
+- agentfiles/node/test-organisation.md
+- agentfiles/meta/readme-maintenance.md
 ```
 
 This applies to both Copilot Chat in VS Code and the Copilot coding agent (automated PRs).
@@ -79,8 +79,8 @@ Add this repo as a submodule (or copy the files) into `.cursor/rules/`. Cursor r
 git submodule add https://github.com/quiram/agentfiles.git .cursor/rules/agentfiles
 
 # Option B: copy only what you need
-cp agents/rules/git/commit-messages.md .cursor/rules/
-cp agents/rules/node/alias-imports.md .cursor/rules/
+cp agentfiles/git/commit-messages.md .cursor/rules/
+cp agentfiles/node/alias-imports.md .cursor/rules/
 ```
 
 Cursor supports `.md` and `.mdc` files. `.mdc` files accept frontmatter to control when a rule applies:
