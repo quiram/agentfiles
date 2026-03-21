@@ -1,6 +1,6 @@
 # Commit Message Conventions
 
-Rules for writing clear, useful commit messages that serve as lasting documentation for the codebase. These rules extend and clarify `agents/ee-llm-toolkit/rules/git-rules.md` — follow both.
+Rules for writing clear, useful commit messages that serve as lasting documentation for the codebase. Pair with a git workflow rule covering branching, PRs, and Conventional Commits — e.g. [git-rules.md](https://github.com/EqualExperts/llm-rules/blob/main/rules/git-rules.md).
 
 ## Context
 
@@ -19,7 +19,7 @@ Rules for writing clear, useful commit messages that serve as lasting documentat
 ### Must Have (Critical)
 
 - *RULE-001:* Do not copy-paste ticket or issue titles as the commit message — write a summary of what the fix actually does
-- *RULE-002:* If the project uses an issue tracker, every commit must reference a work item at the end of the body (e.g. `Fixes #123`, `Refs #123`) — this relaxes `git-rules.md` RULE-004, which is otherwise mandatory
+- *RULE-002:* If the project uses an issue tracker, every commit must reference a work item at the end of the body (e.g. `Fixes #123`, `Refs #123`) — if paired with [git-rules.md](https://github.com/EqualExperts/llm-rules/blob/main/rules/git-rules.md), this relaxes its RULE-004
 
 ### Should Have (Important)
 
@@ -91,7 +91,7 @@ chore: update README.md
 
 ## Related Rules
 
-- `agents/ee-llm-toolkit/rules/git-rules.md` — Broader git workflow conventions; this file extends it
+- [git-rules.md](https://github.com/EqualExperts/llm-rules/blob/main/rules/git-rules.md) — Broader git workflow conventions; this file extends it
 
 ---
 
