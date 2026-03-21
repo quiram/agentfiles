@@ -8,6 +8,8 @@ Rules for how LLM-facing rules are written and where they live. Ensures all rule
 *Level:* Operational — applies every time a rule is authored or updated
 *Audience:* Developers and AI agents creating or modifying rules
 
+> **Path note:** Examples in this file assume this repository is checked out as a submodule at `agents/rules/`. Adjust paths to match wherever it is actually checked out in your project.
+
 ## Core Principles
 
 1. *Template-driven:* All rules derive their structure from the shared template, ensuring scannable, consistent documents
@@ -19,8 +21,8 @@ Rules for how LLM-facing rules are written and where they live. Ensures all rule
 ### Must Have (Critical)
 
 - *RULE-001:* All new rule files must follow the [rule template](https://github.com/EqualExperts/llm-rules/blob/main/prompts/00-rules-template.md) — use its section order, heading names, and RULE-XXX numbering convention
-- *RULE-002:* All rule files must be placed under `agents/rules/` in the appropriate subfolder (`git/`, `node/`, `meta/`, etc.) — not in `agents/ee-llm-toolkit/rules/` or anywhere else in the project
-- *RULE-003:* Every rule file must be registered in `CLAUDE.md` using the `@agents/rules/<subfolder>/<filename>.md` syntax before it is considered active
+- *RULE-002:* All rule files must be placed in the appropriate subfolder within this repository (`git/`, `node/`, `meta/`, etc.) — if no suitable subfolder exists (e.g. adding rules for a new language or platform), create one with a lowercase kebab-case name that reflects the theme
+- *RULE-003:* Every rule file must be registered in `CLAUDE.md` using `@<submodule-path>/<subfolder>/<filename>.md`, where `<submodule-path>` is wherever this repository is checked out in the consuming project
 - *RULE-004:* Omit template sections that are not relevant — do not include empty or placeholder sections
 
 ### Should Have (Important)
@@ -34,7 +36,7 @@ Rules for how LLM-facing rules are written and where they live. Ensures all rule
 ### ✅ Do This
 
 ```
-agents/rules/meta/readme-maintenance.md   ← correct location
+meta/readme-maintenance.md              ← correct location within this repo
 CLAUDE.md includes: @agents/rules/meta/readme-maintenance.md
 ```
 
@@ -42,7 +44,7 @@ CLAUDE.md includes: @agents/rules/meta/readme-maintenance.md
 
 ```
 docs/rules/readme-maintenance.md                           ← wrong location
-agents/rules/meta/readme-maintenance.md (not in CLAUDE.md) ← invisible to agents
+meta/readme-maintenance.md (not in CLAUDE.md)             ← invisible to agents
 ```
 
 ## Related Rules
@@ -55,8 +57,8 @@ agents/rules/meta/readme-maintenance.md (not in CLAUDE.md) ← invisible to agen
 
 *Critical Rules:*
 - Use the [rule template](https://github.com/EqualExperts/llm-rules/blob/main/prompts/00-rules-template.md)
-- Place the file in the appropriate subfolder under `agents/rules/`
-- Register it in `CLAUDE.md` with `@agents/rules/<subfolder>/<filename>.md`
+- Place the file in the appropriate subfolder within this repository
+- Register it in `CLAUDE.md` with `@<submodule-path>/<subfolder>/<filename>.md`
 
 *Quick Decision Guide:*
-When in doubt: template → `agents/rules/<subfolder>/` → `CLAUDE.md`. A rule that isn't in all three places doesn't exist.
+When in doubt: template → correct subfolder → `CLAUDE.md`. A rule that isn't in all three places doesn't exist.

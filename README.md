@@ -23,6 +23,9 @@ These rules extend the broader rule set in [EqualExperts/llm-rules](https://gith
 
 ## Usage
 
+> **Path note:** The examples below assume this repo is added as a submodule at `agents/rules/`. If you check it out elsewhere, adjust all paths accordingly.
+
+
 ### Claude Code
 
 Add this repo as a git submodule and reference individual rules in `CLAUDE.md` using `@` imports. Claude Code will load each file into context automatically.
