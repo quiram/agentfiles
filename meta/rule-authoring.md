@@ -19,8 +19,8 @@ Rules for how LLM-facing rules are written and where they live. Ensures all rule
 ### Must Have (Critical)
 
 - *RULE-001:* All new rule files must follow the template at `agents/ee-llm-toolkit/prompts/00-rules-template.md` — use its section order, heading names, and RULE-XXX numbering convention
-- *RULE-002:* All rule files must be placed in `agents/rules/` — not in `agents/ee-llm-toolkit/rules/` or anywhere else in the project
-- *RULE-003:* Every rule file must be registered in `CLAUDE.md` using the `@agents/rules/<filename>.md` syntax before it is considered active
+- *RULE-002:* All rule files must be placed under `agents/rules/` in the appropriate subfolder (`git/`, `node/`, `meta/`, etc.) — not in `agents/ee-llm-toolkit/rules/` or anywhere else in the project
+- *RULE-003:* Every rule file must be registered in `CLAUDE.md` using the `@agents/rules/<subfolder>/<filename>.md` syntax before it is considered active
 - *RULE-004:* Omit template sections that are not relevant — do not include empty or placeholder sections
 
 ### Should Have (Important)
@@ -34,16 +34,17 @@ Rules for how LLM-facing rules are written and where they live. Ensures all rule
 ### ✅ Do This
 
 ```
-agents/rules/readme-maintenance.md   ← correct location
-CLAUDE.md includes: @agents/rules/readme-maintenance.md
+agents/rules/meta/readme-maintenance.md   ← correct location
+CLAUDE.md includes: @agents/rules/meta/readme-maintenance.md
 ```
 
 ### ❌ Don't Do This
 
 ```
-agents/ee-llm-toolkit/rules/readme-maintenance.md  ← wrong location
-docs/rules/readme-maintenance.md                   ← wrong location
-agents/rules/readme-maintenance.md (not in CLAUDE.md) ← invisible to agents
+agents/ee-llm-toolkit/rules/readme-maintenance.md       ← wrong location
+docs/rules/readme-maintenance.md                        ← wrong location
+agents/rules/readme-maintenance.md (not in CLAUDE.md)  ← invisible to agents
+agents/rules/meta/readme-maintenance.md (not in CLAUDE.md) ← invisible to agents
 ```
 
 ## Related Rules
@@ -56,8 +57,8 @@ agents/rules/readme-maintenance.md (not in CLAUDE.md) ← invisible to agents
 
 *Critical Rules:*
 - Use the template at `agents/ee-llm-toolkit/prompts/00-rules-template.md`
-- Place the file in `agents/rules/`
-- Register it in `CLAUDE.md` with `@agents/rules/<filename>.md`
+- Place the file in the appropriate subfolder under `agents/rules/`
+- Register it in `CLAUDE.md` with `@agents/rules/<subfolder>/<filename>.md`
 
 *Quick Decision Guide:*
-When in doubt: template → `agents/rules/` → `CLAUDE.md`. A rule that isn't in all three places doesn't exist.
+When in doubt: template → `agents/rules/<subfolder>/` → `CLAUDE.md`. A rule that isn't in all three places doesn't exist.
