@@ -7,6 +7,7 @@ A collection of reusable rules and instructions for AI coding agents, organised 
 ```
 git/
   commit-messages.md      # commit message craft — motivation, body, tracker references
+  gitignore.md            # specific ignore entries over blanket ignores with negation
 node/
   alias-imports.md        # always use @/ alias imports, never relative paths
   npm-quality.md          # expose lint + type-check via a single `npm run quality` command
@@ -15,6 +16,9 @@ node/
 meta/
   readme-maintenance.md   # keep README.md accurate as the codebase evolves
   rule-authoring.md       # how to write and register new rules
+skills/
+  retro/SKILL.md          # /retro — session retrospective, skill improvement, automation discovery
+                          # sourced from https://github.com/damacus/agent-skills (MIT licence)
 ```
 
 These rules extend the broader rule set in [EqualExperts/llm-rules](https://github.com/EqualExperts/llm-rules), which covers hexagonal architecture, DDD, clean code, testing principles, and more. The two repos are designed to be used together but work independently.
