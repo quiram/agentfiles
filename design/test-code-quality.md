@@ -26,6 +26,8 @@ Test code is code. All design rules — naming conventions, code organisation, a
 
 - *RULE-003 — Extract shared setup and assertion mechanics:* Duplicated arrange blocks, repeated object construction, and copy-pasted assertion patterns are duplication. Extract them into named helpers. The test body should express *what* is being tested; shared mechanics of *how* tests are assembled belong in helpers.
 
+- *RULE-004 — Follow the red-green cycle:* Write the test first, confirm it fails (red), then write the minimum implementation to make it pass (green). Never write implementation code before a failing test exists for the behaviour it introduces. A test that was never red provides no assurance — it may be passing vacuously or testing the wrong thing.
+
 ### Should Have (Important)
 
 - *RULE-101 — Each test has one reason to fail:* A test that asserts ten things will fail for ten different reasons. One clear assertion per test makes failures diagnostic. If a test legitimately needs to verify multiple related properties, group them under a single named concept and assert that concept.
@@ -110,6 +112,7 @@ it('handles existing invoice', async () => { ... })
 - All design rules apply to tests: naming, organisation, duplication (RULE-001)
 - Test names state the scenario and expected outcome in a consistent pattern (RULE-002)
 - Shared setup and assertion mechanics must be extracted into helpers, not duplicated (RULE-003)
+- Write the test first, confirm it fails, then implement — never write code without a red test first (RULE-004)
 
 *Quick Decision Guide:*
 If the logic for test setup changed, would you update it in more than one place? If yes, extract it. Is the test name clear about what fails when the test fails? If not, rename it.
