@@ -19,8 +19,10 @@ Extends and overrides `agents/ee-llm-toolkit/rules/task-execution.md`.
 ### Must Have (Critical)
 
 - *RULE-001:* Before writing any code, read the relevant source files and produce a numbered implementation plan listing each sub-task with the files affected and the change to be made. **Wait for explicit approval before proceeding.**
+- *RULE-001a:* If the work is associated with a GitHub issue, run `gh issue view <number> --repo quiram/pancomido-website` before reading source files or producing the plan. The issue description, acceptance criteria, and linked PR/branch are inputs to the plan — not an optional read.
 - *RULE-002:* Implement one sub-task at a time. After each sub-task: run quality checks → request review → wait for approval → commit → then move to the next.
 - *RULE-002a:* Quality checks means `npm test` and `npm run quality` both pass with zero failures. If any test fails — regardless of whether the failure appears pre-existing or unrelated to the current change — stop and investigate before proceeding. Never dismiss a failing test as "not my fault".
+- *RULE-002b:* Tests for a piece of functionality must be committed in the same commit as that functionality. A commit that introduces new behaviour without tests, or a commit that only adds tests for previously committed behaviour, violates commit cohesion. The red-green cycle determines the order of writing; the commit captures both together.
 - *RULE-003:* Never batch multiple sub-tasks into a single commit.
 - *RULE-004:* All changes must be made within `agents/agentfiles/`. Never modify `agents/ee-llm-toolkit/` — it is a read-only submodule.
 
@@ -35,5 +37,7 @@ Extends and overrides `agents/ee-llm-toolkit/rules/task-execution.md`.
 
 *Critical Rules:*
 - Plan → approval → implement → quality checks → approval → commit — one sub-task at a time
+- If a GitHub issue exists, read it before reading source files or producing the plan (RULE-001a)
 - Quality checks = `npm test` and `npm run quality` with zero failures. Any failing test blocks progress, regardless of apparent cause.
+- Tests commit with their functionality — never separated (RULE-002b)
 - Never touch `agents/ee-llm-toolkit/` — write rules in `agents/agentfiles/` only
