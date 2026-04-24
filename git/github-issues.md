@@ -19,7 +19,13 @@ Rules for interacting with GitHub issues in this project.
 
 - *RULE-001:* When the user refers to a GitHub issue (e.g. "issue #32"), run `gh issue view <number> --repo quiram/pancomido-website` immediately — do not guess branch names or scope from the issue number alone
 - *RULE-002:* The issue view output includes any linked branch and PR — use those to find the correct branch or PR to check out rather than searching manually
-- *RULE-003:* When creating a new issue, always assign it to a milestone. Run `gh milestone list --repo quiram/pancomido-website` to find the most appropriate one. If no existing milestone fits, create one with `gh api repos/quiram/pancomido-website/milestones` before creating the issue.
+- *RULE-003:* When creating a new issue, always assign it to a milestone:
+  1. List milestones: `gh api repos/quiram/pancomido-website/milestones --jq '.[] | {number, title}'`
+     (`gh milestone list` does not exist — always use `gh api`)
+  2. Create the issue without `--milestone`, then assign it via API:
+     `gh api repos/quiram/pancomido-website/issues/<number> --method PATCH --field milestone=<milestone-number>`
+     (the `--milestone` flag on `gh issue create` is unreliable — patching via API is the safe path)
+  3. If no existing milestone fits, create one first: `gh api repos/quiram/pancomido-website/milestones --method POST --field title='...'`
 
 ## Related Rules
 
@@ -33,4 +39,4 @@ Rules for interacting with GitHub issues in this project.
 *Critical Rules:*
 - Always `gh issue view <number> --repo quiram/pancomido-website` before doing anything with an issue
 - Use the linked branch/PR from the issue output — don't search for branches manually
-- Every new issue must have a milestone — find or create one before filing (RULE-003)
+- Every new issue must have a milestone — list with `gh api`, create without `--milestone`, then patch via `gh api` (RULE-003)
