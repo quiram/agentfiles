@@ -18,7 +18,7 @@ Extends and overrides `agents/ee-llm-toolkit/rules/task-execution.md`.
 
 ### Must Have (Critical)
 
-- *RULE-000:* Before reading source files or producing the plan, run `git branch --show-current`. If the current branch is `main`, follow `git/branch-discipline.md` to create a feature branch. The branch exists before the plan is written — never the other way around.
+- *RULE-000:* Before reading source files or producing the plan, run `git branch --show-current` and verify it is the *correct* branch for this work — not just any non-`main` branch. If the current branch is `main`, or is a feature branch for a different piece of work (e.g. on `feat/19-...` while starting issue #30), follow `git/branch-discipline.md` to switch to or create the right branch. The branch exists before the plan is written — never the other way around. The user may explicitly direct otherwise (e.g. "stay on main", "use this branch") — when they do, follow their instruction.
 - *RULE-001:* Before writing any code, read the relevant source files and produce a numbered implementation plan listing each sub-task with the files affected and the change to be made. **Wait for explicit approval before proceeding.**
 - *RULE-001a:* If the work is associated with a GitHub issue, run `gh issue view <number> --repo quiram/pancomido-website` before reading source files or producing the plan. The issue description, acceptance criteria, and linked PR/branch are inputs to the plan — not an optional read.
 - *RULE-002:* Implement one sub-task at a time. After each sub-task: run quality checks → request review → wait for approval → commit → then move to the next.
