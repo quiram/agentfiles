@@ -20,6 +20,7 @@ Rules for ensuring all work happens on a feature branch, never directly on `main
 - *RULE-001:* Before making any code change, verify you are on a feature branch (`git branch --show-current`). If on `main`, create and switch to a feature branch immediately — do not edit, stage, or commit on `main`.
 - *RULE-002:* Branch names follow `type/<short-description>` (per git-rules.md RULE-101). When the work is tied to a GitHub issue, prefix the description with the issue number: `feat/35-course-expiry`, `fix/42-checkout-error`. For ad-hoc work, omit the number: `chore/tidy-readme`, `refactor/extract-invoice-service`.
 - *RULE-003:* If commits have already landed on `main` by mistake, recover by: (a) creating the feature branch from current `HEAD` to preserve the work, (b) resetting `main` back to `origin/main` with `git branch -f main origin/main`. Never push the accidental commits from `main`.
+- *RULE-004:* When a governance tweak (rule edit, CLAUDE.md change, small process fix) is discovered or discussed mid-session, treat it like a refactor: small, self-contained tweaks may ride on the current feature branch as additional commits; large governance changes (new rule files, multi-file restructures, anything that warrants its own review and discussion) need their own branch and PR. When in doubt, ask the user.
 
 ## Related Rules
 
@@ -35,3 +36,4 @@ Rules for ensuring all work happens on a feature branch, never directly on `main
 - Check `git branch --show-current` before the first edit; if it's `main`, branch first
 - Issue work: `type/<number>-<description>`. Ad-hoc work: `type/<description>`
 - If you slip and commit on `main`, move the commits to a branch and reset `main` to `origin/main`
+- Small governance tweaks discovered mid-session can ride on the current branch; large ones need their own branch and PR (ask if unsure)

@@ -18,6 +18,7 @@ Extends and overrides `agents/ee-llm-toolkit/rules/task-execution.md`.
 
 ### Must Have (Critical)
 
+- *RULE-000:* Before reading source files or producing the plan, run `git branch --show-current`. If the current branch is `main`, follow `git/branch-discipline.md` to create a feature branch. The branch exists before the plan is written — never the other way around.
 - *RULE-001:* Before writing any code, read the relevant source files and produce a numbered implementation plan listing each sub-task with the files affected and the change to be made. **Wait for explicit approval before proceeding.**
 - *RULE-001a:* If the work is associated with a GitHub issue, run `gh issue view <number> --repo quiram/pancomido-website` before reading source files or producing the plan. The issue description, acceptance criteria, and linked PR/branch are inputs to the plan — not an optional read.
 - *RULE-002:* Implement one sub-task at a time. After each sub-task: run quality checks → request review → wait for approval → commit → then move to the next.
@@ -36,6 +37,7 @@ Extends and overrides `agents/ee-llm-toolkit/rules/task-execution.md`.
 ## TL;DR
 
 *Critical Rules:*
+- Verify branch first (RULE-000) — if on `main`, create a feature branch before doing anything else
 - Plan → approval → implement → quality checks → approval → commit — one sub-task at a time
 - If a GitHub issue exists, read it before reading source files or producing the plan (RULE-001a)
 - Quality checks = `npm test` and `npm run quality` with zero failures. Any failing test blocks progress, regardless of apparent cause.
