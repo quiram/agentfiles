@@ -16,7 +16,7 @@ The user asks to clean up, prune, tidy, or delete stale/merged/old local branche
 A local branch is **stale** if any of these hold. Check them in this order, stopping at the first match:
 
 1. **Branch is the default branch or the currently checked-out branch** → never stale, skip.
-2. **An associated PR is merged.** Run `gh pr list --state merged --head <branch> --json number,title,mergedAt --limit 1`. A non-empty result is the strongest signal — it works for squash-merge, rebase-merge, and regular merge equally. Requires `gh` to be available and authenticated against the repo's remote.
+2. **An associated PR is merged.** Run `gh pr list --state merged --head <branch> --json number,mergedAt --jq '.[0].number // empty' --limit 1`. **Non-empty stdout** means a merged PR exists — the strongest signal, working for squash-merge, rebase-merge, and regular merge equally. Note: `gh pr list ... --json` always returns a JSON array (`[]` when no PR), so a naive `'.[0] | "\(.number) \(.mergedAt)"'` will print the literal `null null` for branches with no PR and produce false positives. The `// empty` filter prevents that trap. Requires `gh` to be available and authenticated against the repo's remote.
 3. **Branch is fully merged into the default branch** (regular merge case). `git branch --merged <default>` lists it.
 4. **Branch tip is an ancestor of the default branch.** `git merge-base --is-ancestor <branch> <default>` exits 0. Covers fast-forward and already-rebased cases.
 
