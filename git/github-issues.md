@@ -12,6 +12,7 @@ Rules for interacting with GitHub issues in this project.
 
 1. *Read before acting:* Always fetch the issue before searching branches, writing code, or making assumptions about scope
 2. *Issues belong to milestones:* Every issue must be assigned to a milestone; a milestone-less issue has no place in the roadmap
+3. *The body is the spec:* The issue body is the authoritative specification; comments are for discussion and decisions, not for content that supersedes the body
 
 ## Rules
 
@@ -26,6 +27,7 @@ Rules for interacting with GitHub issues in this project.
      `gh api repos/quiram/pancomido-website/issues/<number> --method PATCH --field milestone=<milestone-number>`
      (the `--milestone` flag on `gh issue create` is unreliable — patching via API is the safe path)
   3. If no existing milestone fits, create one first: `gh api repos/quiram/pancomido-website/milestones --method POST --field title='...'`
+- *RULE-004:* When new information arrives that supersedes content in an issue body, update the body — do not add a comment that contradicts it. Comments are for discussion, decisions, and context that does not fit the spec; they must never carry authoritative content that conflicts with the body. Smell test: if a comment needs to say "this overrides the body" or "where this differs, this wins", edit the body instead.
 
 ## Related Rules
 
@@ -40,3 +42,4 @@ Rules for interacting with GitHub issues in this project.
 - Always `gh issue view <number> --repo quiram/pancomido-website` before doing anything with an issue
 - Use the linked branch/PR from the issue output — don't search for branches manually
 - Every new issue must have a milestone — list with `gh api`, create without `--milestone`, then patch via `gh api` (RULE-003)
+- When new information supersedes the body, edit the body — never let a comment contradict it (RULE-004)
