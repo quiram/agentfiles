@@ -26,6 +26,7 @@ Extends and overrides `agents/ee-llm-toolkit/rules/task-execution.md`.
 - *RULE-002b:* Tests for a piece of functionality must be committed in the same commit as that functionality. A commit that introduces new behaviour without tests, or a commit that only adds tests for previously committed behaviour, violates commit cohesion. The red-green cycle determines the order of writing; the commit captures both together.
 - *RULE-003:* Never batch multiple sub-tasks into a single commit.
 - *RULE-004:* All changes must be made within `agents/agentfiles/`. Never modify `agents/ee-llm-toolkit/` — it is a read-only submodule.
+- *RULE-005:* When running as the GitHub Claude action, do not modify content inside `agents/agentfiles/`. The action has no push access to the agentfiles submodule's remote, so any commit you make there is orphaned: the parent-repo commit that bumps the submodule SHA will reference a non-existent ref, leaving CI unable to init submodules and the PR unmergeable without manual recovery. Instead, leave a comment on the PR or issue describing the proposed agentfiles change — file path, full content, and rationale — so the maintainer can apply it locally and push direct to agentfiles main.
 
 ## Related Rules
 
@@ -43,3 +44,4 @@ Extends and overrides `agents/ee-llm-toolkit/rules/task-execution.md`.
 - Quality checks = `npm test` and `npm run quality` with zero failures. Any failing test blocks progress, regardless of apparent cause.
 - Tests commit with their functionality — never separated (RULE-002b)
 - Never touch `agents/ee-llm-toolkit/` — write rules in `agents/agentfiles/` only
+- When running as the GitHub Claude action, never modify `agents/agentfiles/` — leave a PR/issue comment with the proposed change instead (RULE-005)
