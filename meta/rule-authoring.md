@@ -15,6 +15,7 @@ Rules for how LLM-facing rules are written and where they live. Ensures all rule
 1. *Template-driven:* All rules derive their structure from the shared template, ensuring scannable, consistent documents
 2. *Centralised location:* Rules live in one known place so agents and developers can always find them
 3. *Registered in CLAUDE.md:* A rule that isn't referenced is a rule that won't be applied
+4. *Generic over specific:* Rules in this repository apply across projects. Never hard-code project-specific details (names, URLs, stack choices, traffic levels). Where a rule's applicability depends on project characteristics (e.g. traffic level, team size), express it as a condition ("applies to low-traffic projects") and let the consuming project's context documents provide the matching signal.
 
 ## Rules
 
@@ -24,6 +25,7 @@ Rules for how LLM-facing rules are written and where they live. Ensures all rule
 - *RULE-002:* All rule files must be placed in the appropriate subfolder within this repository (`git/`, `node/`, `meta/`, etc.) — if no suitable subfolder exists (e.g. adding rules for a new language or platform), create one with a lowercase kebab-case name that reflects the theme
 - *RULE-003:* Every rule file must be registered in `CLAUDE.md` using `@<submodule-path>/<subfolder>/<filename>.md`, where `<submodule-path>` is wherever this repository is checked out in the consuming project
 - *RULE-004:* Omit template sections that are not relevant — do not include empty or placeholder sections
+- *RULE-005:* Rules must be generic and project-independent. Do not reference specific project names, URLs, stack choices, or deployment targets. Where applicability depends on project characteristics, express it as a condition (e.g. "applies to low-traffic projects") so any consuming project can self-identify.
 
 ### Should Have (Important)
 
