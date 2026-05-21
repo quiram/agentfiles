@@ -26,7 +26,7 @@ Parse the arguments:
 - **No arguments / `last`** → Analyze the most recent session for the current project
 - **`last N`** (where N is 2-5) → Analyze the N most recent sessions. Cap at 5, never analyze all.
 - **A UUID** → Analyze that specific session
-- **`skill <name>`** → Jump straight to improving a specific skill (skip to Phase 3 with that focus)
+- **`skill <name>`** → Jump straight to improving a specific skill (skip to Phase 4 with that focus)
 
 ## Phase 1: Session Discovery & Analysis
 
@@ -108,11 +108,66 @@ For each skill or agent used in the session:
 
 **After presenting, ask the user**: "What stands out to you? Is there a specific skill or pattern you want to dig into?"
 
-## Phase 3: Skill Improvement (Primary Focus)
+## Phase 3: PR Review Analysis
+
+**Goal**: If a PR is associated with the session, analyze the review cycle to identify friction that could be eliminated by better rules, skills, or conventions.
+
+### Step 1: Detect whether a PR is in scope
+
+Check for a PR in this order — stop at the first hit:
+
+1. The current branch has an open or merged PR: `gh pr list --head $(git branch --show-current) --state all --json number,title,state,url --limit 1`
+2. The session referenced a PR number (in conversation history or checkpoint context)
+3. The user passed a PR number as an argument
+
+If no PR is found, skip this phase entirely and move to Phase 4.
+
+### Step 2: Gather PR evidence
+
+Fetch the review data:
+
+- `gh pr view <number> --json comments,reviews,reviewDecision,additions,deletions,files`
+- `gh api repos/{owner}/{repo}/pulls/<number>/comments` for inline review comments
+- `gh pr diff <number>` only if needed to understand a specific comment — don't read the full diff by default
+
+Focus on **reviewer feedback**: comments, requested changes, and conversation threads. The raw diff is secondary — the session analysis in Phase 2 already covers what was built.
+
+### Step 3: Analyze review friction
+
+For each review comment or requested change, classify it:
+
+| Category | What it means | Action |
+|----------|--------------|--------|
+| **Rule/skill gap** | The reviewer asked for something a rule or skill should have enforced automatically. The agent had no instruction covering this. | Propose a rule addition or skill update in Phase 4 |
+| **Convention mismatch** | A rule or convention exists but the agent didn't follow it, or followed a different convention than the reviewer expected. | Investigate why — missing from CLAUDE.md? Ambiguous wording? Overridden by another rule? |
+| **Knowledge gap** | The reviewer pointed out something about the codebase or domain that the agent didn't know. | Consider whether a memory entry or project doc update would help |
+| **Legitimate discussion** | A genuine design trade-off or difference of opinion. Not friction to eliminate. | Note it but don't try to automate it away |
+
+For each non-"legitimate discussion" item, ask:
+
+- How many round-trips did it take to resolve?
+- If the agent had gotten it right first time, how many comments would that have saved?
+- What specific rule, skill change, or memory entry would have prevented it?
+
+### Step 4: Present findings
+
+Summarize conversationally:
+
+- **Total review comments** and how many were avoidable
+- **Top friction points** — the comments that caused the most back-and-forth, ranked by round-trip count
+- **Proposed fixes** — specific rule/skill/memory changes, each linked to the comment that motivated it
+
+Then ask: "Any of these surprise you, or want to dig into a specific comment?"
+
+Findings from this phase feed directly into Phase 4 (Skill Improvement) — rule gaps identified here become candidates for skill edits.
+
+---
+
+## Phase 4: Skill Improvement (Primary Focus)
 
 **Goal**: Conversationally iterate on a specific skill or agent.
 
-This is the core of `/retro`. When the user identifies a skill to improve (or when invoked with `skill <name>`):
+This is the core of `/retro`. When the user identifies a skill to improve (or when invoked with `skill <name>`, or when Phase 3 surfaces rule/skill gaps from PR review):
 
 1. **Read the current skill/agent/workflow file** (check all relevant locations, prioritizing the environment you are currently in):
    - environment-native skill directories
@@ -156,7 +211,7 @@ When analyzing a skill, consider:
 - **Unclear triggers**: Description or argument-hint that doesn't match actual usage
 - **Tool access**: Does the skill need capabilities or tool access it doesn't have?
 
-## Phase 4: Broader Improvements
+## Phase 5: Broader Improvements
 
 **Goal**: Capture learnings beyond individual skills.
 
