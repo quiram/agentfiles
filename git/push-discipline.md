@@ -24,6 +24,7 @@ This project runs a Claude agent to review every PR push. Each review consumes a
 - *RULE-001:* Commit locally after each sub-task as normal — commits must remain atomic and self-contained (see git-rules.md)
 - *RULE-002:* Do NOT push until the user explicitly says to push — regardless of how many commits have accumulated locally
 - *RULE-003:* Never push as part of completing a task or sub-task; wait for explicit instruction
+- *RULE-004:* **Exception — GitHub Actions context:** When running as the GitHub Claude action (triggered by `@claude` on an issue or PR), pushing is permitted once the work is complete. The trigger itself is the user's explicit instruction to deliver a PR. Push the branch and open the PR without waiting for further approval.
 
 ## Related Rules
 
@@ -36,3 +37,4 @@ This project runs a Claude agent to review every PR push. Each review consumes a
 
 *Critical Rules:*
 - Commit after every sub-task; push only when the user explicitly says to
+- Exception: in the GitHub Actions context (`@claude` trigger), push and open the PR when work is complete — the trigger is the explicit instruction
