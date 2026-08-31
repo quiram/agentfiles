@@ -18,9 +18,7 @@ Extends and overrides `agents/ee-llm-toolkit/rules/task-execution.md`.
 
 ### Must Have (Critical)
 
-- *RULE-000:* Before reading source files or producing the plan, run `git branch --show-current` and verify it is the *correct* branch for this work — not just any non-`main` branch. If the current branch is `main`, or is a feature branch for a different piece of work (e.g. on `feat/19-...` while starting issue #30), follow `git/branch-discipline.md` to switch to or create the right branch. The branch exists before the plan is written — never the other way around. The user may explicitly direct otherwise (e.g. "stay on main", "use this branch") — when they do, follow their instruction.
 - *RULE-001:* Before writing any code, read the relevant source files and produce a numbered implementation plan listing each sub-task with the files affected and the change to be made. **Wait for explicit approval before proceeding.**
-- *RULE-001a:* If the work is associated with a GitHub issue, run `gh issue view <number> --repo quiram/pancomido-website` before reading source files or producing the plan. The issue description, acceptance criteria, and linked PR/branch are inputs to the plan — not an optional read.
 - *RULE-002:* Implement one sub-task at a time. After each sub-task: run quality checks → request review → wait for approval → commit → then move to the next.
 - *RULE-002a:* Quality checks means `npm test` and `npm run quality` both pass with zero failures. If any test fails — regardless of whether the failure appears pre-existing or unrelated to the current change — stop and investigate before proceeding. Never dismiss a failing test as "not my fault".
 - *RULE-002b:* Tests for a piece of functionality must be committed in the same commit as that functionality. A commit that introduces new behaviour without tests, or a commit that only adds tests for previously committed behaviour, violates commit cohesion. The red-green cycle determines the order of writing; the commit captures both together.
@@ -38,9 +36,7 @@ Extends and overrides `agents/ee-llm-toolkit/rules/task-execution.md`.
 ## TL;DR
 
 *Critical Rules:*
-- Verify branch first (RULE-000) — if on `main`, create a feature branch before doing anything else
 - Plan → approval → implement → quality checks → approval → commit — one sub-task at a time
-- If a GitHub issue exists, read it before reading source files or producing the plan (RULE-001a)
 - Quality checks = `npm test` and `npm run quality` with zero failures. Any failing test blocks progress, regardless of apparent cause.
 - Tests commit with their functionality — never separated (RULE-002b)
 - Never touch `agents/ee-llm-toolkit/` — write rules in `agents/agentfiles/` only
