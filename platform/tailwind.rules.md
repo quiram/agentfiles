@@ -24,6 +24,8 @@ Rules for using Tailwind CSS in a React/Next.js codebase so that styles remain m
 
 - *RULE-003 — Missing token → add to the theme, not inline:* If a design value you need is not yet in the Tailwind theme, add it to the project's theme configuration. Do not use an arbitrary value (e.g. `text-[#hex]`) as a substitute for a missing token.
 
+- *RULE-004 — Check a raw value's history before promoting it to a token:* Finding an existing arbitrary value (`text-[#hex]`) in the codebase and mechanically promoting it into the theme per RULE-003 is not automatically correct — it satisfies the letter of the rule while potentially canonising a mistake. Before adding it to the theme, check the project's design documentation and changelog for that value: if it's flagged as deprecated, legacy, or rejected anywhere, surface that contradiction to the user instead of silently tokenising it. A value that becomes a named token is much harder to remove later than a stray inline hex — it now looks deliberate.
+
 ### Should Have (Important)
 
 - *RULE-101 — Prefer `children` over a `value` prop for variable content in extracted components:* When a repeated pattern wraps varying content, accept `children: React.ReactNode` rather than a typed `value` prop. This keeps the component flexible without unnecessary specialisation.
@@ -52,8 +54,8 @@ function ScheduleRow({ label, children }: { label: string; children: React.React
 <span className="text-primary">Naturally</span>
 
 // Missing token → add to theme config, then use by name
-// tailwind.config.ts colors: { ..., ocean: '#2D5F8D' }
-<span className="text-ocean">...</span>
+// tailwind.config.ts colors: { ..., brandBlue: '#1E5A8A' }
+<span className="text-brandBlue">...</span>
 ```
 
 ### ❌ Don't Do This
@@ -68,7 +70,11 @@ function ScheduleRow({ label, children }: { label: string; children: React.React
 <span className="text-[#4EB595]">Naturally</span>
 
 // Arbitrary value for a colour that should be in the theme
-<span className="text-[#2D5F8D]">...</span>
+<span className="text-[#1E5A8A]">...</span>
+
+// Promoting a stray hex to a token without checking whether it was already
+// rejected elsewhere in the project's own design docs (RULE-004)
+// tailwind.config.ts colors: { ..., legacyBlue: '#1E5A8A' }  ← docs call this exact hex "off-brand"
 ```
 
 ## Decision Framework
@@ -100,6 +106,7 @@ function ScheduleRow({ label, children }: { label: string; children: React.React
 - Repeated `className` string → extract a component (RULE-001)
 - Use token names (`text-primary`) not raw values (`text-[#hex]`) (RULE-002)
 - Missing value → add to theme config (RULE-003)
+- Before tokenising a stray raw value, check it isn't a value the project's own docs already reject (RULE-004)
 
 *Quick Decision Guide:*
-Before copying a `className` string to a second element: extract a component. Before writing `text-[#...]`: check the theme — if the token exists, use it; if it doesn't, add it to the theme config.
+Before copying a `className` string to a second element: extract a component. Before writing `text-[#...]`: check the theme — if the token exists, use it; if it doesn't, check the project's design docs for that exact value before adding it to the theme config.
