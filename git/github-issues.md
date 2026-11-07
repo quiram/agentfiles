@@ -28,6 +28,7 @@ Rules for interacting with GitHub issues in this project.
      (the `--milestone` flag on `gh issue create` is unreliable — patching via API is the safe path)
   3. If no existing milestone fits, create one first: `gh api repos/quiram/pancomido-website/milestones --method POST --field title='...'`
 - *RULE-004:* When new information arrives that supersedes content in an issue body, update the body — do not add a comment that contradicts it. Comments are for discussion, decisions, and context that does not fit the spec; they must never carry authoritative content that conflicts with the body. Smell test: if a comment needs to say "this overrides the body" or "where this differs, this wins", edit the body instead.
+- *RULE-005:* When checking whether a branch has been merged or whether a PR exists, always run `git fetch origin` first and compare against `origin/main` (not local `main`), and always pass `--state all` to `gh pr list` — the default only shows open PRs and misses merged or closed ones.
 
 ## Related Rules
 
@@ -43,3 +44,4 @@ Rules for interacting with GitHub issues in this project.
 - Use the linked branch/PR from the issue output — don't search for branches manually
 - Every new issue must have a milestone — list with `gh api`, create without `--milestone`, then patch via `gh api` (RULE-003)
 - When new information supersedes the body, edit the body — never let a comment contradict it (RULE-004)
+- Always fetch and compare against `origin/main`; always pass `--state all` to `gh pr list` — default only shows open PRs (RULE-005)
