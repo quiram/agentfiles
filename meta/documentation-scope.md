@@ -4,7 +4,7 @@ Rules for what project documentation is allowed to describe. Keeps context docum
 
 ## Context
 
-*Applies to:* All project documentation — context documents, references, READMEs
+*Applies to:* All project documentation — context documents, references, READMEs — and comments in code
 *Level:* Operational — applies every time a document is written or edited
 *Audience:* Developers and AI agents maintaining project documentation
 
@@ -22,6 +22,8 @@ Rules for what project documentation is allowed to describe. Keeps context docum
 - *RULE-002 — Documentation is not task tracking:* Do not reference tickets, issues or milestones as pending work, and do not maintain lists of planned features. A document that tracks work competes with the tracker and goes stale the moment the tracker moves on. Referencing an issue as the *source* of a recorded decision is acceptable; listing it as outstanding work is not.
 
 - *RULE-003 — Historical state is legitimate where it explains the present:* Describing a system that still exists (a legacy site being migrated from) or a constraint that still binds ("we don't use X because it cannot Y") is present-tense fact and belongs in the documentation. Describing a state the project has left behind, purely as history, does not — that is what version control is for.
+
+- *RULE-004 — Document state, not change:* Write about what is there, never about the edit that put it there. A comment or document must not explain that something was moved, removed or renamed, and must not point out that something which doesn't belong here isn't here ("payment recording lives in another module"). Each of those describes a transaction — the diff that produced the current state — and belongs in the commit message, which is where a reader looking for it will look.
 
 ## Patterns & Anti-Patterns
 
@@ -45,6 +47,15 @@ Previously private lessons were sold through WooCommerce, but we removed
 this during the September migration.
 ```
 
+```typescript
+/**
+ * FreeAgent Invoices
+ *
+ * Recording payment lives in the bank-transaction-explanations module,
+ * not here.   ← describes what this module doesn't contain
+ */
+```
+
 ## Decision Framework
 
 *When unsure whether something belongs:*
@@ -65,6 +76,7 @@ this during the September migration.
 - Documentation describes what the project does today; agreed-but-unbuilt work lives in the tracker until it ships (RULE-001)
 - No ticket, issue or milestone references as pending work, and no plan lists (RULE-002)
 - Describing a system that still exists, or a constraint that still binds, is present-tense fact and belongs (RULE-003)
+- Document state, not change: no notes on what was moved or removed, nor on what isn't here (RULE-004)
 
 *Quick Decision Guide:*
 If the sentence needs "yet", "will", "planned", or a ticket number to make sense, it does not belong in the documentation.
